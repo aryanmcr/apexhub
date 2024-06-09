@@ -1,9 +1,9 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
-   Name = "🔥 apex hub | Bee Swarm Simulator 🔫",
+   Name = "🔥 Apex Hub | Bee Swarm Simulator 🔫",
    LoadingTitle = "🔫 Bee Swarm Simulator 💥",
-   LoadingSubtitle = "by aryan",
+   LoadingSubtitle = "by aryxn.mcr",
    ConfigurationSaving = {
       Enabled = true,
       FolderName = apex, -- Create a custom folder for your hub/game
@@ -29,21 +29,6 @@ local Window = Rayfield:CreateWindow({
 local MainTab = Window:CreateTab("🏠 Home", nil) -- Title, Image
 local MainSection = MainTab:CreateSection("Autofarm")
 
-Rayfield:Notify({
-   Title = "Script Loading",
-   Content = "Thanks for using!",
-   Duration = 5,
-   Image = 13047715178,
-   Actions = { -- Notification Buttons
-      Ignore = {
-         Name = "Okay!",
-         Callback = function()
-         print("The user tapped Okay!")
-      end
-   },
-},
-})
-
 local Toggle = MainTab:CreateToggle({
    Name = "Auto Farm",
    CurrentValue = false,
@@ -54,17 +39,28 @@ local Toggle = MainTab:CreateToggle({
 })
 
 local CombatTab = Window:CreateTab("⚔️ Combat", nil) -- Title, Image
-local Toggle = MainTab:CreateToggle({
+local CombatSection = CombatTab:CreateSection("Bosses")
+local Toggle = CombatSection:CreateToggle({
    Name = "Auto Kill Vicious",
    CurrentValue = false,
    Flag = "AutoVicous", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
         print("AUTO VICOUS")
-            _G.AutoVicious = Value
+        _G.AutoVicious = Value
+   end,
+})
+local Toggle = CombatSection:CreateToggle({
+   Name = "ServerHop for bosses",
+   CurrentValue = false,
+   Flag = "ServerHop", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+        print("SERVERHOP")
+        _G.ServerHop = Value
    end,
 })
 
-local OtherSection = MainTab:CreateSection("Other")
+local OtherTab = Window:CreateTab("🌍 Misc")
+local OtherSection = OtherTab:CreateSection("Player")
 
 local Slider = OtherSection:CreateSlider({
    Name = "WalkSpeed Slider",
