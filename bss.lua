@@ -29,8 +29,8 @@ local Window = Rayfield:CreateWindow({
 local MainTab = Window:CreateTab("🏠 Home", nil) -- Title, Image
 local MainSection = MainTab:CreateSection("Autofarm")
 
-local AutoFarmToggle = MainTab:CreateToggle({
-   Name = "Auto Farm",
+local AutofarmToggle = MainSection:CreateToggle({
+   Name = "AutoFarm",
    CurrentValue = false,
    Flag = "AutoFarm", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
