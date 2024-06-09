@@ -29,7 +29,7 @@ local Window = Rayfield:CreateWindow({
 local MainTab = Window:CreateTab("🏠 Home", nil) -- Title, Image
 local MainSection = MainTab:CreateSection("Autofarm")
 
-local Toggle = MainTab:CreateToggle({
+local AutoFarmToggle = MainSection:CreateToggle({
    Name = "Auto Farm",
    CurrentValue = false,
    Flag = "AutoFarm", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
@@ -40,7 +40,8 @@ local Toggle = MainTab:CreateToggle({
 
 local CombatTab = Window:CreateTab("⚔️ Combat", nil) -- Title, Image
 local CombatSection = CombatTab:CreateSection("Bosses")
-local Toggle = CombatSection:CreateToggle({
+
+local AutoViciousToggle = CombatSection:CreateToggle({
    Name = "Auto Kill Vicious",
    CurrentValue = false,
    Flag = "AutoVicous", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
@@ -49,7 +50,8 @@ local Toggle = CombatSection:CreateToggle({
         _G.AutoVicious = Value
    end,
 })
-local Toggle = CombatSection:CreateToggle({
+
+local ServerHopToggle = CombatSection:CreateToggle({
    Name = "ServerHop for bosses",
    CurrentValue = false,
    Flag = "ServerHop", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
@@ -59,10 +61,10 @@ local Toggle = CombatSection:CreateToggle({
    end,
 })
 
-local OtherTab = Window:CreateTab("🌍 Misc")
+local OtherTab = Window:CreateTab("🌍 Misc", nil)
 local OtherSection = OtherTab:CreateSection("Player")
 
-local Slider = OtherSection:CreateSlider({
+local WalkspeedSlider = OtherSection:CreateSlider({
    Name = "WalkSpeed Slider",
    Range = {1, 350},
    Increment = 1,
@@ -74,7 +76,7 @@ local Slider = OtherSection:CreateSlider({
    end,
 })
 
-local Slider = OtherSection:CreateSlider({
+local JumppowerSlider = OtherSection:CreateSlider({
    Name = "JumpPower Slider",
    Range = {1, 350},
    Increment = 1,
