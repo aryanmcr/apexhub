@@ -131,6 +131,8 @@ local function loop()
         else
           if getgenv.settings[ServerHopVicious] then
             print("Hopping Server")
+            local placeId = "1537690962"
+           game:GetService("TeleportService"):Teleport(placeId)   
           end
         end
       end
