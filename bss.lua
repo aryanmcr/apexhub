@@ -1,3 +1,4 @@
+-- Auto click to prevent idle
 local vu = game:GetService("VirtualUser")
 game:GetService("Players").LocalPlayer.Idled:connect(function()
    vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
@@ -5,22 +6,27 @@ game:GetService("Players").LocalPlayer.Idled:connect(function()
    vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 end)
 
+-- Load APIs
 local api = loadstring(game:HttpGet('https://raw.githubusercontent.com/aryanmcr/apexhub/main/api.lua'))()
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
-hives = game.Workspace.Honeycombs:GetChildren() 
-for i = #hives, 1, -1 do  v = game.Workspace.Honeycombs:GetChildren()[i] 
-if v.Owner.Value == nil then game.ReplicatedStorage.Events.ClaimHive:FireServer(v.HiveID.Value) 
-end 
+-- Claim unowned hives
+local hives = game.Workspace.Honeycombs:GetChildren() 
+for i = #hives, 1, -1 do  
+    local v = game.Workspace.Honeycombs:GetChildren()[i] 
+    if v.Owner.Value == nil then 
+        game.ReplicatedStorage.Events.ClaimHive:FireServer(v.HiveID.Value) 
+    end 
 end
 
+-- Create UI Window
 local Window = Rayfield:CreateWindow({
    Name = "🔥 Apex Hub | Bee Swarm Simulator 🔫",
    LoadingTitle = "🔫 Bee Swarm Simulator 💥",
    LoadingSubtitle = "by aryxn.mcr",
    ConfigurationSaving = {
       Enabled = true,
-      FolderName = apex,
+      FolderName = "apex",
       FileName = "apexhub"
    },
    Discord = {
@@ -40,6 +46,7 @@ local Window = Rayfield:CreateWindow({
    },
 })
 
+-- Settings
 getgenv().settings = {  
   Version = "1.0.0",
   Autofarm = false,
@@ -50,6 +57,7 @@ getgenv().settings = {
   ViciousDetected = false,
 }
 
+-- Create Tabs and Sections
 local HomeTab = Window:CreateTab("🏠 Home", nil)
 local MainTab = Window:CreateTab("🤖 Main", nil)
 local CombatTab = Window:CreateTab("⚔️ Combat", nil) 
@@ -60,15 +68,17 @@ local OtherSection = OtherTab:CreateSection("Player")
 local MainSection = MainTab:CreateSection("Autofarm")
 local CombatSection = CombatTab:CreateSection("Bosses")
   
+-- Labels
 local PlayerUserText = HomeTab:CreateLabel("Welcome, "..game.Players.LocalPlayer.DisplayName.. " (" ..game.Players.LocalPlayer.Name.. ")")
 local ScriptVersionText = HomeTab:CreateLabel("Script Version: "..getgenv().settings.Version)
 
+-- Toggle buttons
 local AutoFarmToggle = MainTab:CreateToggle({
    Name = "Autofarm",
    CurrentValue = false,
    Flag = "Autofarm",
    Callback = function(Value)
-     getgenv.settings[Autofarm] = Value
+     getgenv().settings.Autofarm = Value
    end,
 })
 
@@ -77,7 +87,7 @@ local AutoViciousToggle = CombatTab:CreateToggle({
    CurrentValue = false,
    Flag = "AutoVicous",
    Callback = function(Value)
-        getgenv.settings[AutoVicous] = Value
+        getgenv().settings.AutoVicious = Value
    end,
 })
 
@@ -86,10 +96,11 @@ local ServerHopToggle = CombatTab:CreateToggle({
    CurrentValue = false,
    Flag = "ServerHop", 
    Callback = function(Value)
-        getgenv.settings[ServerHopVicious] = Value
+        getgenv().settings.ServerHopVicious = Value
    end,
 })
 
+-- Sliders
 local WalkSpeedSlider = OtherTab:CreateSlider({
    Name = "WalkSpeed Slider",
    Range = {1, 350},
@@ -98,8 +109,8 @@ local WalkSpeedSlider = OtherTab:CreateSlider({
    CurrentValue = 16,
    Flag = "sliderws", 
    Callback = function(Value)
-      game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (Value)
-      getgenv.settings[WalkSpeed] = Value
+      game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+      getgenv().settings.WalkSpeed = Value
       WalkSpeedSlider:Set(Value)
    end,
 })
@@ -112,40 +123,41 @@ local JumpPowerSlider = OtherTab:CreateSlider({
    CurrentValue = 50,
    Flag = "sliderjp",
    Callback = function(Value)
-      game.Players.LocalPlayer.Character.Humanoid.JumpPower = (Value)
-      getgenv.settings[JumpPower] = Value
+      game.Players.LocalPlayer.Character.Humanoid.JumpPower = Value
+      getgenv().settings.JumpPower = Value
       JumpPowerSlider:Set(Value)
    end,
 })
 
+-- Main loop
 local function loop()
-  print(getgenv.settings)
-  if getgenv.settings[AutoVicous] then
-      if getgenv.settings[ViciousDetected] then
-        print("Vicious Detected")
-      else
-local found = false
+  print(getgenv().settings)
+  if getgenv().settings.AutoVicous then
+      if not getgenv().settings.ViciousDetected then
+        print("Finding Vicious")
+        local found = false
         for i,v in next, game.workspace.Particles:GetChildren() do
-				for x in string.gmatch(v.Name, "Vicious") do
-                    task.wait() 
-if string.find(v.Name, "Vicious") then
-found = true
-end
-end
-end
+            for x in string.gmatch(v.Name, "Vicious") do
+                task.wait() 
+                if string.find(v.Name, "Vicious") then
+                    found = true
+                end
+            end
+        end
         if found then
           print("Found Vicious")
+          getgenv().settings.ViciousDetected = true
         else
-          if getgenv.settings[ServerHopVicious] then
+          if getgenv().settings.ServerHopVicious then
             print("Hopping Server")
             local placeId = "1537690962"
-           game:GetService("TeleportService"):Teleport(placeId)   
+            game:GetService("TeleportService"):Teleport(placeId)   
           end
         end
       end
   end
-  game.Players.LocalPlayer.Character.Humanoid.JumpPower = (getgenv.settings[JumpPower])
-  game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (getgenv.settings[WalkSpeed])
+  game.Players.LocalPlayer.Character.Humanoid.JumpPower = getgenv().settings.JumpPower
+  game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = getgenv().settings.WalkSpeed
 end
 
 while wait(0.5) do
