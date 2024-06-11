@@ -26,25 +26,33 @@ local Window = Rayfield:CreateWindow({
    },
 })
 
-getgenv().settings = {
-  "Version" = "1.0.0",
-  "Autofarm" = false,
-  "AutoVicious" = false,
-  "ServerHopVicious" = false,
-  "JumpPower" = 50,
-  "WalkSpeed" = 16,
-  "ViciousDetected" = false,
+getgenv().settings = {  
+  Version = "1.0.0",
+  Autofarm = false,
+  AutoVicious = false,
+  ServerHopVicious = false,
+  JumpPower = 50,
+  WalkSpeed = 16,
+  ViciousDetected = false,
 }
 
-local MainTab = Window:CreateTab("🏠 Home", nil)
+local runtime = 0
+
+local HomeTab = Window:CreateTab("🏠 Home", nil)
+local MainTab = Window:CreateTab("🤖 Main", nil)
 local CombatTab = Window:CreateTab("⚔️ Combat", nil) 
 local OtherTab = Window:CreateTab("🌍 Other", nil)
 
+local InfoSection = HomeTab:CreateSection("Information")
 local OtherSection = OtherTab:CreateSection("Player")
 local MainSection = MainTab:CreateSection("Autofarm")
 local CombatSection = CombatTab:CreateSection("Bosses")
+  
+local PlayerUserText = HomeTab:CreateLabel("Welcome, "..game.Players.LocalPlayer.DisplayName.. " (" ..game.Players.LocalPlayer.Name.. ")")
+local ScriptVersionText = HomeTab:CreateLabel("Script Version: "..getgenv().settings.Version)
+local TimeText = HomeTab:CreateLabel("Time: "..tostring(os.clock))
 
-local AutoFarmToggle = MainSection:CreateToggle({
+local AutoFarmToggle = MainTab:CreateToggle({
    Name = "Autofarm",
    CurrentValue = false,
    Flag = "Autofarm",
@@ -53,7 +61,7 @@ local AutoFarmToggle = MainSection:CreateToggle({
    end,
 })
 
-local AutoViciousToggle = CombatSection:CreateToggle({
+local AutoViciousToggle = CombatTab:CreateToggle({
    Name = "Auto Kill Vicious",
    CurrentValue = false,
    Flag = "AutoVicous",
@@ -62,7 +70,7 @@ local AutoViciousToggle = CombatSection:CreateToggle({
    end,
 })
 
-local ServerHopToggle = CombatSection:CreateToggle({
+local ServerHopToggle = CombatTab:CreateToggle({
    Name = "ServerHop for bosses",
    CurrentValue = false,
    Flag = "ServerHop", 
@@ -71,7 +79,7 @@ local ServerHopToggle = CombatSection:CreateToggle({
    end,
 })
 
-local WalkSpeedSlider = OtherSection:CreateSlider({
+local WalkSpeedSlider = OtherTab:CreateSlider({
    Name = "WalkSpeed Slider",
    Range = {1, 350},
    Increment = 1,
@@ -84,7 +92,7 @@ local WalkSpeedSlider = OtherSection:CreateSlider({
    end,
 })
 
-local JumpPowerSlider = OtherSection:CreateSlider({
+local JumpPowerSlider = OtherTab:CreateSlider({
    Name = "JumpPower Slider",
    Range = {1, 350},
    Increment = 1,
@@ -116,6 +124,7 @@ local function loop()
   end
   game.Players.LocalPlayer.Character.Humanoid.JumpPower = (getgenv.settings[JumpPower])
   game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (getgenv.settings[WalkSpeed])
+  TimeText:Set("Time: "..tostring(os.clock))
 end
 
 while wait(1) do
