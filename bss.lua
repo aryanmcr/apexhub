@@ -4,10 +4,15 @@ game:GetService("Players").LocalPlayer.Idled:connect(function()
    wait(1)
    vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 end)
-hives = game.Workspace.Honeycombs:GetChildren() for i = #hives, 1, -1 do  v = game.Workspace.Honeycombs:GetChildren()[i] if v.Owner.Value == nil then game.ReplicatedStorage.Events.ClaimHive:FireServer(v.HiveID.Value) end end
 
 local api = loadstring(game:HttpGet('https://raw.githubusercontent.com/aryanmcr/apexhub/main/api.lua'))()
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+hives = game.Workspace.Honeycombs:GetChildren() 
+for i = #hives, 1, -1 do  v = game.Workspace.Honeycombs:GetChildren()[i] 
+if v.Owner.Value == nil then game.ReplicatedStorage.Events.ClaimHive:FireServer(v.HiveID.Value) 
+end 
+end
 
 local Window = Rayfield:CreateWindow({
    Name = "🔥 Apex Hub | Bee Swarm Simulator 🔫",
