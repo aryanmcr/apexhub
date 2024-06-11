@@ -6,84 +6,98 @@ local Window = Rayfield:CreateWindow({
    LoadingSubtitle = "by aryxn.mcr",
    ConfigurationSaving = {
       Enabled = true,
-      FolderName = apex, -- Create a custom folder for your hub/game
+      FolderName = apex,
       FileName = "apexhub"
    },
    Discord = {
       Enabled = false,
-      Invite = "noinvitelink", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ABCD would be ABCD
-      RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+      Invite = "noinvitelink",
+      RememberJoins = true
    },
-   KeySystem = true, -- Set this to true to use our key system
+   KeySystem = true,
    KeySettings = {
       Title = "Key | apex hub",
       Subtitle = "Key System",
       Note = "Get From Discord",
-      FileName = "apexhubbsskey", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
-      SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
-      GrabKeyFromSite = true, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
-      Key = {"https://raw.githubusercontent.com/aryanmcr/apexhub/main/key"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+      FileName = "apexhubbsskey",
+      SaveKey = true,
+      GrabKeyFromSite = true, 
+      Key = {"https://raw.githubusercontent.com/aryanmcr/apexhub/main/key"}
    }
 })
 
-local MainTab = Window:CreateTab("🏠 Home", nil) -- Title, Image
+getgenv().settings = {
+  "Version" = "1.0.0",
+  "Autofarm" = false,
+  "AutoVicious" = false,
+  "ServerHopVicious" = false,
+  "JumpPower" = 50,
+  "WalkSpeed" = 16,
+  "ViciousDetected" = false,
+}
+
+local MainTab = Window:CreateTab("🏠 Home", nil)
 local MainSection = MainTab:CreateSection("Autofarm")
 
-local AutofarmToggle = MainSection:CreateToggle({
-   Name = "AutoFarm",
+local AutoFarmToggle = MainSection:CreateToggle({
+   Name = "Autofarm",
    CurrentValue = false,
-   Flag = "AutoFarm", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Flag = "Autofarm",
    Callback = function(Value)
-        print("FARMING")
+     getgenv.settings[Autofarm] = Value
    end,
 })
 
-local CombatTab = Window:CreateTab("⚔️ Combat", nil) -- Title, Image
+local CombatTab = Window:CreateTab("⚔️ Combat", nil) 
 local CombatSection = CombatTab:CreateSection("Bosses")
 
 local AutoViciousToggle = CombatSection:CreateToggle({
    Name = "Auto Kill Vicious",
    CurrentValue = false,
-   Flag = "AutoVicous", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Flag = "AutoVicous",
    Callback = function(Value)
-        print("AUTO VICOUS")
-        _G.AutoVicious = Value
+        getgenv.settings[AutoVicous] = Value
    end,
 })
 
 local ServerHopToggle = CombatSection:CreateToggle({
    Name = "ServerHop for bosses",
    CurrentValue = false,
-   Flag = "ServerHop", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Flag = "ServerHop", 
    Callback = function(Value)
-        print("SERVERHOP")
-        _G.ServerHop = Value
+        getgenv.settings[ServerHopVicious] = Value
    end,
 })
 
 local OtherTab = Window:CreateTab("🌍 Misc", nil)
 local OtherSection = OtherTab:CreateSection("Player")
 
-local WalkspeedSlider = OtherSection:CreateSlider({
+local WalkSpeedSlider = OtherSection:CreateSlider({
    Name = "WalkSpeed Slider",
    Range = {1, 350},
    Increment = 1,
-   Suffix = "Speed",
+   Suffix = "WalkSpeed",
    CurrentValue = 16,
-   Flag = "sliderws", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Flag = "sliderws", 
    Callback = function(Value)
-        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (Value)
+      game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (Value)
+      getgenv.settings[WalkSpeed] = Value
    end,
 })
 
-local JumppowerSlider = OtherSection:CreateSlider({
+local JumpPowerSlider = OtherSection:CreateSlider({
    Name = "JumpPower Slider",
    Range = {1, 350},
    Increment = 1,
-   Suffix = "Speed",
-   CurrentValue = 16,
-   Flag = "sliderjp", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Suffix = "JumpPower",
+   CurrentValue = 50,
+   Flag = "sliderjp",
    Callback = function(Value)
-        game.Players.LocalPlayer.Character.Humanoid.JumpPower = (Value)
+      game.Players.LocalPlayer.Character.Humanoid.JumpPower = (Value)
+      getgenv.settings[JumpPower] = Value
    end,
 })
+
+local function loop()
+  print(getgenv.settings)
+end
