@@ -124,8 +124,15 @@ local function loop()
       if getgenv.settings[ViciousDetected] then
         print("Vicious Detected")
       else
-        print("Finding Vicious")
-        local found = false
+local found = false
+        for i,v in next, game.workspace.Particles:GetChildren() do
+				for x in string.gmatch(v.Name, "Vicious") do
+                    task.wait() 
+if string.find(v.Name, "Vicious") then
+found = true
+end
+end
+end
         if found then
           print("Found Vicious")
         else
