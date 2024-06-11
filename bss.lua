@@ -36,8 +36,6 @@ getgenv().settings = {
   ViciousDetected = false,
 }
 
-local runtime = 0
-
 local HomeTab = Window:CreateTab("🏠 Home", nil)
 local MainTab = Window:CreateTab("🤖 Main", nil)
 local CombatTab = Window:CreateTab("⚔️ Combat", nil) 
@@ -50,7 +48,6 @@ local CombatSection = CombatTab:CreateSection("Bosses")
   
 local PlayerUserText = HomeTab:CreateLabel("Welcome, "..game.Players.LocalPlayer.DisplayName.. " (" ..game.Players.LocalPlayer.Name.. ")")
 local ScriptVersionText = HomeTab:CreateLabel("Script Version: "..getgenv().settings.Version)
-local TimeText = HomeTab:CreateLabel("Time: "..tostring(os.clock))
 
 local AutoFarmToggle = MainTab:CreateToggle({
    Name = "Autofarm",
@@ -89,6 +86,7 @@ local WalkSpeedSlider = OtherTab:CreateSlider({
    Callback = function(Value)
       game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (Value)
       getgenv.settings[WalkSpeed] = Value
+      WalkSpeedSlider:Set(Value)
    end,
 })
 
@@ -102,6 +100,7 @@ local JumpPowerSlider = OtherTab:CreateSlider({
    Callback = function(Value)
       game.Players.LocalPlayer.Character.Humanoid.JumpPower = (Value)
       getgenv.settings[JumpPower] = Value
+      JumpPowerSlider:Set(Value)
    end,
 })
 
@@ -124,9 +123,8 @@ local function loop()
   end
   game.Players.LocalPlayer.Character.Humanoid.JumpPower = (getgenv.settings[JumpPower])
   game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (getgenv.settings[WalkSpeed])
-  TimeText:Set("Time: "..tostring(os.clock))
 end
 
-while wait(1) do
+while wait(0.5) do
   loop()
 end
