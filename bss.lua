@@ -23,7 +23,7 @@ local Window = Rayfield:CreateWindow({
       SaveKey = true,
       GrabKeyFromSite = true, 
       Key = {"https://raw.githubusercontent.com/aryanmcr/apexhub/main/key"}
-   }
+   },
 })
 
 getgenv().settings = {
@@ -37,7 +37,12 @@ getgenv().settings = {
 }
 
 local MainTab = Window:CreateTab("🏠 Home", nil)
+local CombatTab = Window:CreateTab("⚔️ Combat", nil) 
+local OtherTab = Window:CreateTab("🌍 Other", nil)
+
+local OtherSection = OtherTab:CreateSection("Player")
 local MainSection = MainTab:CreateSection("Autofarm")
+local CombatSection = CombatTab:CreateSection("Bosses")
 
 local AutoFarmToggle = MainSection:CreateToggle({
    Name = "Autofarm",
@@ -47,9 +52,6 @@ local AutoFarmToggle = MainSection:CreateToggle({
      getgenv.settings[Autofarm] = Value
    end,
 })
-
-local CombatTab = Window:CreateTab("⚔️ Combat", nil) 
-local CombatSection = CombatTab:CreateSection("Bosses")
 
 local AutoViciousToggle = CombatSection:CreateToggle({
    Name = "Auto Kill Vicious",
@@ -68,9 +70,6 @@ local ServerHopToggle = CombatSection:CreateToggle({
         getgenv.settings[ServerHopVicious] = Value
    end,
 })
-
-local OtherTab = Window:CreateTab("🌍 Misc", nil)
-local OtherSection = OtherTab:CreateSection("Player")
 
 local WalkSpeedSlider = OtherSection:CreateSlider({
    Name = "WalkSpeed Slider",
@@ -100,4 +99,25 @@ local JumpPowerSlider = OtherSection:CreateSlider({
 
 local function loop()
   print(getgenv.settings)
+  if getgenv.settings[AutoVicous] then
+      if getgenv.settings[ViciousDetected] then
+        print("Vicious Detected")
+      else
+        print("Finding Vicious")
+        local found = false
+        if found then
+          print("Found Vicious")
+        else
+          if getgenv.settings[ServerHopVicious] then
+            print("Hopping Server")
+          end
+        end
+      end
+  end
+  game.Players.LocalPlayer.Character.Humanoid.JumpPower = (getgenv.settings[JumpPower])
+  game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (getgenv.settings[WalkSpeed])
+end
+
+while wait(1) do
+  loop()
 end
