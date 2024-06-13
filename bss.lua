@@ -42,14 +42,14 @@ local KeyTabs = {
     KeyTabMain = KeyWindow:AddTab('Key System'),
 }
 
-local KeyLeftGroupBox = KeyTabs.KeyTabMain:AddLeftGroupbox('Key')
+local KeyLeftGroupBox = KeyTabs.KeyTabMain:AddLeftGroupbox('Home')
 
 KeyLeftGroupBox:AddInput('KeyTextBox', {
-    Default = 'Input Key Here!',
+    Default = 'Input Key',
     Numeric = true, -- true / false, only allows numbers
     Finished = false, -- true / false, only calls callback when you press enter
 
-    Text = 'Input your key here!',
+    Text = 'Get key from discord!',
     Tooltip = 'Get Key From Discord!', -- Information shown when you hover over the textbox
 
     Placeholder = 'Key', -- placeholder text when the box is empty
