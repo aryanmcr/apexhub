@@ -33,7 +33,7 @@ local KeyWindow = Library:CreateWindow({
     Title = 'Apex Hub - Key System',
     Center = true,
     AutoShow = true,
-    Size = Udim2.new(0, 300, 0, 400),
+    Size = UDim2.new(0, 300, 0, 400),
     TabPadding = 8,
     MenuFadeTime = 0.2
 })
