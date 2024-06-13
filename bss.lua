@@ -60,6 +60,6 @@ KeyLeftGroupBox:AddInput('KeyTextBox', {
     end
 })
 
-Options.MyTextbox:OnChanged(function()
+KeyLeftGroupBox.KeyTextBox:OnChanged(function()
     print('Text updated. New text:', Options.MyTextbox.Value)
 end)
