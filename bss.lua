@@ -39,7 +39,7 @@ local KeyWindow = Library:CreateWindow({
 })
 
 local KeyTabs = {
-    KeyTabMain = Window:AddTab('Key System'),
+    KeyTabMain = KeyWindow:AddTab('Key System'),
 }
 
 local KeyLeftGroupBox = KeyTabs.KeyTabMain:AddLeftGroupbox('Key')
