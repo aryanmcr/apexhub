@@ -19,7 +19,7 @@ end
 -- Load APIs
 local api = loadstring(game:HttpGet('https://raw.githubusercontent.com/aryanmcr/apexhub/main/api.lua'))()
 
-local repo = 'https://raw.githubusercontent.com/violin-suzutsuki/LinoriaLib/main/'
+local repo = 'https://raw.githubusercontent.com/wally-rblx/LinoriaLib/main/'
 
 local Library = loadstring(game:HttpGet(repo .. 'Library.lua'))()
 local ThemeManager = loadstring(game:HttpGet(repo .. 'addons/ThemeManager.lua'))()
@@ -33,7 +33,7 @@ local KeyWindow = Library:CreateWindow({
     Title = 'Apex Hub - Key System',
     Center = true,
     AutoShow = true,
-    Size = Udim2.new(300,400),
+    Size = Udim2.new(0, 300, 0, 400),
     TabPadding = 8,
     MenuFadeTime = 0.2
 })
